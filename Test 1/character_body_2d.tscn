@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://dheog6yefo35f"]
+
+[ext_resource type="Script" path="res://CharacterBody2D.gd" id="1_mbbr6"]
+[ext_resource type="Texture2D" uid="uid://dexl5b31q4cyl" path="res://slime_red.png" id="2_oqgw8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7h8u7"]
+size = Vector2(12, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sq5en"]
+atlas = ExtResource("2_oqgw8")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ey22d"]
+atlas = ExtResource("2_oqgw8")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b00g0"]
+atlas = ExtResource("2_oqgw8")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ce4jw"]
+atlas = ExtResource("2_oqgw8")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l4xfx"]
+animations = [{
+"frames": [{
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_sq5en")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ey22d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b00g0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ce4jw")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 4.0
+}]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1i2tl"]
+texture = ExtResource("2_oqgw8")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_bp4kj"]
+sources/0 = SubResource("TileSetAtlasSource_1i2tl")
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(528, 336)
+script = ExtResource("1_mbbr6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+scale = Vector2(10, 10)
+shape = SubResource("RectangleShape2D_7h8u7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(0, 1.13687e-13)
+scale = Vector2(10, 10)
+sprite_frames = SubResource("SpriteFrames_l4xfx")
+animation = &"walk"
+
+[node name="TileMap" type="TileMap" parent="AnimatedSprite2D"]
+tile_set = SubResource("TileSet_bp4kj")
+format = 2

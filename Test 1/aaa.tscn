@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://dx33s1cbaogue"]
+
+[ext_resource type="PackedScene" uid="uid://dheog6yefo35f" path="res://character_body_2d.tscn" id="1_od5qx"]
+[ext_resource type="Texture2D" uid="uid://c807ijnuk80gl" path="res://BaseMap.png" id="2_68y6p"]
+[ext_resource type="Script" path="res://Camera2D.gd" id="3_lgmqy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v3qlj"]
+size = Vector2(555, 58)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ypaj3"]
+size = Vector2(184, 328)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_64lx6"]
+size = Vector2(64, 160)
+
+[node name="World" type="Node2D"]
+
+[node name="Map" type="StaticBody2D" parent="."]
+
+[node name="BaseMap" type="Sprite2D" parent="Map"]
+position = Vector2(1072, 768)
+scale = Vector2(2.52, 2.52)
+texture = ExtResource("2_68y6p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map"]
+position = Vector2(346.5, 43)
+shape = SubResource("RectangleShape2D_v3qlj")
+
+[node name="Player" parent="." groups=["Player"] instance=ExtResource("1_od5qx")]
+z_index = 10
+position = Vector2(144, 160)
+scale = Vector2(0.5, 0.5)
+
+[node name="Triggers" type="Node2D" parent="."]
+
+[node name="UscitaStanza0-1" type="Area2D" parent="Triggers"]
+position = Vector2(96, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/UscitaStanza0-1"]
+position = Vector2(700, 436)
+shape = SubResource("RectangleShape2D_ypaj3")
+
+[node name="EntrataStanza0" type="Area2D" parent="Triggers"]
+position = Vector2(24, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/EntrataStanza0"]
+position = Vector2(640, 352)
+shape = SubResource("RectangleShape2D_64lx6")
+
+[node name="EntrataStanza1" type="Area2D" parent="Triggers"]
+position = Vector2(24, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/EntrataStanza1"]
+position = Vector2(904, 520)
+shape = SubResource("RectangleShape2D_64lx6")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(376, 320)
+limit_smoothed = true
+script = ExtResource("3_lgmqy")
+
+[node name="Line2D" type="Line2D" parent="Camera2D"]
+points = PackedVector2Array(0, 300, 0, -300)
+
+[connection signal="body_entered" from="Triggers/UscitaStanza0-1" to="Camera2D" method="_on_uscita_stanza_01_body_entered"]
+[connection signal="body_entered" from="Triggers/EntrataStanza0" to="Camera2D" method="_on_entrata_stanza_0_body_entered"]
+[connection signal="body_entered" from="Triggers/EntrataStanza1" to="Camera2D" method="_on_entrata_stanza_1_body_entered"]
